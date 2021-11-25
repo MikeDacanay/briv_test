@@ -3,6 +3,7 @@ const logger = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 const passport = require("passport");
 const passportJWT = require('passport-jwt');
 
@@ -17,5 +18,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 module.exports = app;

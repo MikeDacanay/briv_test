@@ -1,11 +1,14 @@
 import React from "react";
 
-export const Input = ({label ,name, ...rest}) => {
+export const Input = ({label ,name, variant, ...rest}) => {
+
+  const tempCss = variant === 'textarea-0' ? {'height': '100px', 'width': '50%'} : {};
+
   return (
     <div className="Input__container">        
-        { label && <label htmlFor="name"> {label} </label>}
+        { label && <label htmlFor={name}> {label} </label>}
         <input
-          id={name}
+          style={tempCss}
           name={name}
           {...rest}/>
     </div>

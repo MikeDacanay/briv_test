@@ -21,17 +21,20 @@ export const AuthForm = props => {
                     name="email"
                     label="Email"
                     type="email"
+                    id="email"
                     placeholder='Email'
                     required
                 />
                 <Input
                     name="password"
+                    id="password"
                     label="Password"
                     type="password"
                     placeholder="Password"
                     required/>
                 {!isLogin && <Input
                     name="display_name"
+                    id='username'
                     label="Username"
                     type="text"
                     placeholder="Username"
