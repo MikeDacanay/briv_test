@@ -1,19 +1,20 @@
 const User = require('../models/UserModel');
-// const tryCatchHandlr = require('../shared/helpers');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config({path: '../config.env'});
 
-exports.createUser = async (req, res, err) => {
+exports.createUser = async (req, res) => {
     try {
         const user = await User.create({...req.body});
         const {_id, display_name} =  user;
-        
-
-        res.header('Access-Control-Allow-Origin', '*');
-
+        //TODO CREATE EXPIRE FOR JWT TOKEN
+        const token = jwt.sign({_id}, process.env.JWT_KEY);
         res.status(201).json({
             status: 'success',
             user: {
                 _id, display_name
             },
+            token
         });
     } catch (err) {
         //TODO need error message handler        
@@ -24,16 +25,17 @@ exports.createUser = async (req, res, err) => {
     }
 };
 
-exports.loginUser = async(req, res) => {    
+exports.loginUser = async(req, res) => {        
     const user = await User.findOne({...req.body});   
 
     if(user){
         const {_id, display_name} = user;
-
-        res.header('Access-Control-Allow-Origin', '*');
+        //TODO CREATE EXPIRE FOR JWT TOKEN
+        const token = jwt.sign({_id, display_name}, process.env.JWT_KEY);
         res.status(201).json({
             status: 'success',
-            user: {_id, display_name}
+            user: {_id, display_name},
+            token
         });
         return;
     }

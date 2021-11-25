@@ -41,6 +41,8 @@ function authDataAndErrorHandlr(arr, history,  {loginHandlr, errLoginHandlr}){
 
     if(data) {
         loginHandlr();
+        const token = data.data.token;
+        window.localStorage.setItem('token', token);
         history.replace('/dashboard');
         return;
     }    
