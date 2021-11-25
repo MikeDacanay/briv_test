@@ -18,7 +18,7 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 // passport.use(new LocalStrategy(async(username, password, done) => {
-//     const intake = await User.findOne({username}); /
+//     const intake = await User.findOne({username}); //
 
 //     if(intake) return done(null, intake);
 
