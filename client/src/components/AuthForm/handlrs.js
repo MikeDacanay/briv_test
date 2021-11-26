@@ -13,7 +13,7 @@ export const submitHandlr = async (e, isLogin, authContxt, history) => {
             }}, 
     );
     const [data, error] = await tryCatchHandlr(request);
-
+            
     authDataAndErrorHandlr([data, error], history, authContxt);
 };
 
@@ -25,12 +25,12 @@ export const toggleLoginHanldr = (setIsLogin, {errLoginHandlr2}) => {
 
 /*** HELPERS ***/
 function authDataAndErrorHandlr(arr, history,  {loginHandlr, errLoginHandlr}){
-    const [data, error] = arr;
+    const [{data}, error] = arr;
 
     if(data) {
-        loginHandlr();
-        const token = data.data.token;
-        window.localStorage.setItem('token', token);
+        loginHandlr(data.user.display_name);
+        localStorage.clear();
+        window.localStorage.setItem('token', data.token);
         history.replace('/dashboard');
         return;
     }    

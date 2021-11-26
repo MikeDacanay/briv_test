@@ -1,16 +1,16 @@
 import React, { createContext, useState } from 'react';
-import { loginHandlr } from './handlrs';
+// import { loginHandlr } from './handlrs';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null); //saves _id
     const [errLogin, setErrLogin] = useState(false);
 
     const initialValues = {
-        isLoggedIn: isLoggedIn,
-        errLogin: errLogin,
-        loginHandlr: () => setIsLoggedIn(prev => !prev),
+        isLoggedIn,
+        errLogin,
+        loginHandlr: (id) => setIsLoggedIn(id),
         errLoginHandlr: () => setErrLogin(prev => !prev),
         errLoginHandlr2: () => setErrLogin(false),
     };

@@ -1,7 +1,11 @@
 const express = require('express');
-const postController = require('../controllers/post');
+const {createPost, deletePost, getPosts, patchPost} = require('../controllers/post');
 const router = express.Router();
+const passport = require('passport');
 
-router.post('/', postController.createPost);
+router.get('/', getPosts);
+router.post('/', passport.authenticate("jwt", { session: false }), createPost);
+router.delete('/:id', passport.authenticate("jwt", { session: false }),  deletePost);
+router.patch('/:id', passport.authenticate("jwt", { session: false }), patchPost);
 
 module.exports = router;

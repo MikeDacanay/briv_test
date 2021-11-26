@@ -7,8 +7,6 @@ import { submitHandlr, toggleLoginHanldr } from "./handlrs";
 import { Input } from "../UI/Input";
 import { Button } from "../UI/Button";
 
-
-
 export const AuthForm = props => {
     const [isLogin, setIsLogin] = useState(true);
     const authContxt = useContext(AuthContext);

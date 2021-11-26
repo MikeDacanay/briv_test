@@ -18,3 +18,15 @@ export const payloader = e => {
 
     return payload;
 }
+
+export const refPayloader = ({current}) => {
+    const payload = {};
+
+    for(const [i, el] of [...current].entries()){
+        //to omit 'submit el' key value pair to payload
+        if(i+1 === current.length) break;
+        payload[el.name] = el.value;
+    }
+
+    return payload;
+}

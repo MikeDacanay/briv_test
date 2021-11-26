@@ -5,13 +5,14 @@ const cors = require('cors');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const passport = require("passport");
-const passportJWT = require('passport-jwt');
-
+const passportJWTStrategy = require('./middleware/passportJWT');
+const dotenv = require('dotenv');
+dotenv.config({path: './config.env'});
 
 const app = express();
-const JWTStrategy = passportJWT.Strategy;
-app.use(passport.initialize());
 app.options('*', cors())
+app.use(passport.initialize());
+passportJWTStrategy();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

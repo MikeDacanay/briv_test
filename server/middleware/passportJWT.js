@@ -6,21 +6,17 @@ dotenv.config({path: '../config.env'});
 const JWTStrategy = passportJWT.Strategy;
 
 
-const passportJWTStrategy = passport.use(new JWTStrategy({
+const passportJWTStrategy = (req, res, next) => {
+  passport.use(new JWTStrategy({
     jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_KEY,
-  }, (jwt_payload, done) => {
-    // if(user.id === jwt_payload.user._id){
-    //   return done(null, user)
-    // } else {
-    //   return done(null, false, {
-    //     message: "Token not matched"
-    //   })
-    // }
-
-    console.log(jwt_payload);
-
-    return done(null, null);
-}))  
+    secretOrKey: `${process.env.JWT_KEY}`,
+    }, ({_id, display_name}, done) => {
+      if(_id && display_name) return done(null, {_id, display_name});
+      //TODO This needs to be transfered over as message
+      return done(null, false, {
+        message: "Invalid token or something"
+      })
+  }))  
+}
 
 module.exports = passportJWTStrategy;

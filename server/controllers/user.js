@@ -8,7 +8,7 @@ exports.createUser = async (req, res) => {
         const user = await User.create({...req.body});
         const {_id, display_name} =  user;
         //TODO CREATE EXPIRE FOR JWT TOKEN
-        const token = jwt.sign({_id}, process.env.JWT_KEY);
+        const token = jwt.sign({_id, display_name}, process.env.JWT_KEY);
         res.status(201).json({
             status: 'success',
             user: {
@@ -19,7 +19,7 @@ exports.createUser = async (req, res) => {
     } catch (err) {
         //TODO need error message handler        
         res.status(401).json({
-            err,
+            error: err.message,
             message: 'failed to create user',
         });
     }
@@ -41,6 +41,7 @@ exports.loginUser = async(req, res) => {
     }
 
     res.status(401).json({
-        message: 'failed to find user',
+        status: 'failed',
+        message: 'failed to find user'
     });
 }
