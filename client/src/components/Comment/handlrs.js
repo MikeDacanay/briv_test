@@ -14,7 +14,7 @@ export const deleteCommentHandlr = async (post_id, setrequestComments) => {
 
     const request = authAxios
         .delete(
-            `/comments/${post_id}`,
+            `comments/${post_id}`,
             config,
             {
                 headers: {

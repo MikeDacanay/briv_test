@@ -91,12 +91,13 @@ exports.deleteComment = async (req, res) => {
         res.status(204).json({
             status: 'success',
         }); 
-    }   
-
-    res.status(401).json({
-        status: 'fail',
-        message: 'Cannot find post to delete'
-    })
+        return;
+    }else{
+        res.status(401).json({
+            status: 'fail',
+            message: 'Cannot find post to delete'
+        })
+    }
 }
 
 exports.patchComment = async (req, res) => {

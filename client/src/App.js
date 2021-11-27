@@ -2,10 +2,11 @@ import './App.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Welcome } from './pages/Welcome';
 import { Dashboard } from './pages/Dashboard';
+import { useStartup } from './customHooks';
 import { Title } from './components/Title';
 
 export const App = () => {
-  // const authContxt = useContext(AuthContext);
+  useStartup();
 
   return (
     <>
