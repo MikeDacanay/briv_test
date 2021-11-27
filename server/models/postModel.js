@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    _id: String,
-    display_name: String,
+    _id: {
+        type: String,
+        required: true
+    },
+    display_name: {
+        type: String,
+        required: true
+    }
 });
-  
 
 const postSchema = new mongoose.Schema({
         title: {
@@ -17,7 +22,7 @@ const postSchema = new mongoose.Schema({
         },
         user: {
             type: userSchema,
-        }
+        },
     },
     { collection: 'post', timestamps: true }
 ); 

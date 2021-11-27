@@ -1,16 +1,19 @@
 import React, { useRef, useContext } from 'react';
-// import { Input } from '../UI/Input';
+import { CommentForm } from '../CommentForm';
+import { Comments } from '../Comments';
 import { Button } from '../UI/Button';
 import { UpdatablePost } from './fractals';
 import { AuthContext } from '../../context/AuthContext';
 import { useToggledEditPost } from './customHook';
 import { deletePostHandlr, toggleEditHandlr } from './handlrs';
+import { PostsContext } from '../../context/PostsContext';
 
 export const Post = ({post}) => {   
     const { isLoggedIn } = useContext(AuthContext);
-    const {_id, title, body, user: {display_name}, createdAt } = post;
+    const { setPosts } = useContext(PostsContext)
+    const {_id, title, body, user: {display_name, _id: user_id}, createdAt } = post;
     const containerRef = useRef(null);
-    const [editablepost, seteditablepost] = useToggledEditPost(containerRef);
+    const [editablepost, seteditablepost] = useToggledEditPost(containerRef, setPosts);
 
     return (
         <div className="Post__container" style={{'border': '1px solid black'}}>
@@ -21,19 +24,22 @@ export const Post = ({post}) => {
                     display_name={display_name}
                     createdAt={createdAt}
                     editablepost={editablepost}/>                        
-                {isLoggedIn === display_name && (
+                {isLoggedIn === user_id && (
                     <Button>
-                        {/* // clicked={() => toggleEditHandlr(seteditablepost)}> */}
-                        {!editablepost || editablepost === 'open' ? 'Edit' : 'Update'}
+                        {!editablepost || editablepost === 'open' ? 'Edit Post' : 'Update Post'}
                     </Button>)
                 }
             </form>        
-            {isLoggedIn === display_name && (
+            {isLoggedIn === user_id && (
                 <Button
-                    clicked={() => deletePostHandlr(_id)}>
-                    Delete
+                    clicked={() => deletePostHandlr(_id, setPosts)}>
+                    Delete Post
                 </Button>)
             }    
+            <CommentForm
+                post_id={_id}/>
+            <Comments
+                post_id={_id}/>
         </div>
     )
 }

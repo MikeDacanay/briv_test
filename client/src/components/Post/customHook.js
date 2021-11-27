@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { authAxios } from "../../shared/axiosConfig";
-import { tryCatchHandlr, refPayloader, payloader } from "../../shared/helpers";
+import { tryCatchHandlr, refPayloader, getPosts } from "../../shared/helpers";
 
-export const useToggledEditPost = (ref) => {
+export const useToggledEditPost = (ref, setPosts) => {
     const [editablepost, seteditablepost] = useState('open');
     
     useEffect(() => {                
@@ -16,12 +16,13 @@ export const useToggledEditPost = (ref) => {
                         refPayloader(ref)
                     );
                 
-                const [data, error] = await tryCatchHandlr(request);    
-
+                const [data, error] = await tryCatchHandlr(request);
                 console.log(data, error);
+
+                getPosts(setPosts);
             })()            
         }
-    }, [editablepost])
+    }, [editablepost, ref, setPosts])
     
     return [editablepost, seteditablepost];
 } 

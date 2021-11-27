@@ -1,3 +1,5 @@
+import { reqAxios } from "./axiosConfig";
+
 export const tryCatchHandlr = async(promise) => {
     try{
         const data = await promise;
@@ -29,4 +31,26 @@ export const refPayloader = ({current}) => {
     }
 
     return payload;
+}
+
+export const getPosts = async (setPosts) => {
+    const getRequest = reqAxios
+        .get(
+            '/posts'
+        );
+
+    const [{data: {posts}}, getPostsError] = await tryCatchHandlr(getRequest);
+
+    return posts ? setPosts(posts) : getPostsError;
+}
+
+export const getComments = async (setComments, post_id) => {
+    const getRequest = reqAxios
+        .get(
+            `/comments/${post_id}`
+        );
+
+    const [{data: {comments}}, getCommentsError] = await tryCatchHandlr(getRequest);
+
+    return comments ? setComments(comments) : getCommentsError;
 }

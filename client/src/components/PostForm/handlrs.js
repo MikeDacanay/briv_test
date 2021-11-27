@@ -1,7 +1,7 @@
 import { authAxios } from "../../shared/axiosConfig";
-import { tryCatchHandlr, payloader } from "../../shared/helpers";
+import { tryCatchHandlr, payloader, getPosts } from "../../shared/helpers";
 
-export const submitHandlr = async(e) => {
+export const submitHandlr = async(e, setPosts) => {
     e.preventDefault();
 
     const request = authAxios
@@ -10,7 +10,9 @@ export const submitHandlr = async(e) => {
             payloader(e)
         );
 
-    const [data, error] = await tryCatchHandlr(request);
+    const [createPostData, createPostError] = await tryCatchHandlr(request);
+    console.log(createPostData, createPostError);
+    //TODO show either success/error handling after create 
 
-    return (data, error);
+    getPosts(setPosts);
 };

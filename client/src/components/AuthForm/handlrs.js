@@ -24,12 +24,17 @@ export const toggleLoginHanldr = (setIsLogin, {errLoginHandlr2}) => {
 
 
 /*** HELPERS ***/
-function authDataAndErrorHandlr(arr, history,  {loginHandlr, errLoginHandlr}){
+function authDataAndErrorHandlr(arr, history,  {loginHandlr, errLoginHandlr, displayNameHandlr}){
     const [{data}, error] = arr;
 
     if(data) {
-        loginHandlr(data.user.display_name);
-        localStorage.clear();
+        const {_id, display_name} = {...data.user};
+
+        window.localStorage.clear();
+        window.localStorage.setItem('userId', _id);
+        loginHandlr(_id);
+        window.localStorage.setItem('display_name', display_name);
+        displayNameHandlr(display_name);
         window.localStorage.setItem('token', data.token);
         history.replace('/dashboard');
         return;

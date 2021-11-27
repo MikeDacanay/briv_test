@@ -8,8 +8,10 @@ export const authAxios = axios.create({
         'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
         "Content-Type": "application/json",
     }
+});
 
-    // {headers: {
-    //     "Content-Type": "application/json",
-    // }}, 
+export const reqAxios = axios.create({
+    headers: {
+        "Content-Type": "application/json",
+    }
 });

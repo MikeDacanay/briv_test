@@ -15,7 +15,7 @@ export const UpdatablePost = ({editablepost, title, body, display_name, createdA
         'cursor': 'default',
         'backgroundColor': 'transparent',
         'color': 'black',
-        'border': '0px',
+        'border': '1px solid black',
         'width': '50%',
         'height': '40px'
     }
@@ -24,47 +24,11 @@ export const UpdatablePost = ({editablepost, title, body, display_name, createdA
         'cursor': 'default',
         'backgroundColor': 'transparent',
         'color': 'black',
-        'border': '0px',
+        'border': '1px solid black',
         'width': '50%',
         'height': '100px'
     }
 
-    
-    // return (
-    //     <>
-    //         <div className="" style={{'display': 'flex'}}>
-    //             <div className="">
-    //                 Title:
-    //             </div>
-    //             <div 
-    //                 className="" 
-    //                 contentEditable={editable} 
-    //                 suppressContentEditableWarning={true}
-    //                 style={editable ? editableCss: {}}>
-    //                 {title}
-    //             </div>
-    //         </div>
-    //         <br />
-    //         <div className="" style={{'display': 'flex'}}>
-    //             <div className="">
-    //                 Body:
-    //             </div>
-    //             <div 
-    //                 className="" 
-    //                 contentEditable={editable} 
-    //                 suppressContentEditableWarning={true}
-    //                 style={editable ? editableCss : {}}> 
-    //                 {body}
-    //             </div>
-    //         </div>
-    //         <br />
-    //         <div className="" style={{'display': 'flex'}}>
-    //             <div className="">User: {display_name}</div>
-    //             <div className="">CreatedAt: {createdAt}</div>
-    //         </div>
-    //     </>
-    // )
-    // }
     return (
         <>
             <Input
@@ -86,6 +50,11 @@ export const UpdatablePost = ({editablepost, title, body, display_name, createdA
                 variant='textarea-0'
                 required
                 placeholder='Enter Post Here'/>
+                
+            <div className="" style={{'dislplay': 'flex'}}>
+                <div className="">Created By:</div>
+                <div className="">{display_name}</div>
+            </div>
         </>
     );
 }

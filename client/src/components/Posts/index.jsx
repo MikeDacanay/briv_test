@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Post } from "../Post";
-import { useGetPosts } from "./customHooks";
+import { PostsContext } from "../../context/PostsContext";
 
-export const Posts = props => {
-    const [posts, setPosts] = useGetPosts();  
+
+export const Posts = () => {
+ 
+    const {posts} = useContext(PostsContext);
 
     return (
         <div className="Posts">

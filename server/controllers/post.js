@@ -95,3 +95,20 @@ exports.patchPost = async (req, res) => {
         })
     }
 }
+
+exports.checkPost = async (req, res, next) => {
+
+    const {comment: {post_id}} = req.body;
+
+    try{
+        const post = await Post.findById(post_id);
+        console.log(post);
+        next();
+    }catch(err) {
+        res.status(401).json({
+            status: 'failed',
+            error: err.message,
+            message: 'cannot find post'
+        });
+    }    
+}
