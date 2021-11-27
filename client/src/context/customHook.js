@@ -6,7 +6,7 @@ export const useGetPosts = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        (async function getPosts() {
+        (async function () {
             const request = reqAxios.get('/posts');
             const [{data}, error] = await tryCatchHandlr(request);
 
@@ -22,24 +22,3 @@ export const useGetPosts = () => {
 
     return [posts, setPosts];
 }
-
-// export const useGetComments = () => {
-//     const [comments, setComments] = useState([]);
-
-//     useEffect(() => {
-//         (async function getPosts() {
-//             const request = reqAxios.get('/posts');
-//             const [{data}, error] = await tryCatchHandlr(request);
-
-//             //TODO Handle posts if there are zero posts
-//             if(data){
-//                 setComments(data.posts);
-//             }
-
-//             //TODO Handle error by displaying html image
-//             console.log(error);
-//         })()
-//     }, []);
-
-//     return [comments, setComments];
-// }

@@ -1,18 +1,26 @@
-import { authAxios } from "../../shared/axiosConfig";
+import { authAxios, config } from "../../shared/axiosConfig";
+// import axios from 'axios';
 import { tryCatchHandlr, payloader, getPosts } from "../../shared/helpers";
 
 export const submitHandlr = async(e, setPosts) => {
     e.preventDefault();
+    const token = window.localStorage.getItem('token');
 
     const request = authAxios
         .post(
             '/posts',
-            payloader(e)
+            payloader(e),
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                }
+            }
         );
 
     const [createPostData, createPostError] = await tryCatchHandlr(request);
-    console.log(createPostData, createPostError);
-    //TODO show either success/error handling after create 
 
     getPosts(setPosts);
+
+    return [createPostData, createPostError];
 };

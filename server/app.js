@@ -11,7 +11,7 @@ const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
 const app = express();
-app.options('*', cors())
+app.options('*', cors());
 app.use(passport.initialize());
 passportJWTStrategy();
 app.use(logger('dev'));

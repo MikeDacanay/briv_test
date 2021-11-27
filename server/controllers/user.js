@@ -4,11 +4,13 @@ const dotenv = require('dotenv');
 dotenv.config({path: '../config.env'});
 
 exports.createUser = async (req, res) => {
+    
     try {
         const user = await User.create({...req.body});
         const {_id, display_name} =  user;
         //TODO CREATE EXPIRE FOR JWT TOKEN
         const token = jwt.sign({_id, display_name}, process.env.JWT_KEY);
+
         res.status(201).json({
             status: 'success',
             user: {
@@ -26,6 +28,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async(req, res) => {        
+    
     const user = await User.findOne({...req.body});   
 
     if(user){

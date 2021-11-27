@@ -1,13 +1,31 @@
-import { authAxios } from "../../shared/axiosConfig";
+import { authAxios, config } from "../../shared/axiosConfig";
+// import axios from 'axios';
 import { tryCatchHandlr } from "../../shared/helpers";
 import { getPosts } from "../../shared/helpers";
 
 
 export const deletePostHandlr = async (id, setPosts) => {
+    const token = window.localStorage.getItem('token');
+
     const request = authAxios
         .delete(
             `/posts/${id}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                }
+            }
         );
+
+    // const request = axios
+    //     .delete(
+    //         `/posts/${id}`,
+    //         {headers: {
+    //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+    //             "Content-Type": "application/json",
+    //         }},
+    //     );
 
     const [data, error] = await tryCatchHandlr(request);
     console.log(data, error);

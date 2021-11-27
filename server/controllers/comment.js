@@ -1,34 +1,36 @@
 const Comment = require('../models/commentModel');
+const moment = require('moment');
 
 exports.getComments = async (req, res) => {
     const {postId} = req.params;
+    
 
     try{
         const comments = await Comment.find({'post._id': postId}).sort({'updatedAt': -1});
 
         if(comments.length){
+
+
             res.status(201).json({
-                status: 'success',            
-                comments
+                status: 'success', 
+                message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`,           
+                // comments: xxx,
+                comments: [...comments].map(comment => {
+                    const {createdAt} =  comment
+                    return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')};
+                }),
             })
         }
-
-        res.status(201).json({
-            status: 'success',            
-            message: 'no comments under post',
-            comments
-        })
     }catch (err){
         res.status(401).json({
             status: 'failure',            
-            error: err.message,
-            message: 'failed to retrieve comments'
+            message: 'failed to retrieve comments',
         })
     }
 };
 
 exports.createComment = async (req, res) => {      
-
+    
     const {_id: token_userID, display_name} = req.user;
     const {comment: {
         user_id, 
@@ -76,6 +78,7 @@ exports.createComment = async (req, res) => {
 }
 
 exports.deleteComment = async (req, res) => {
+    
     const {id: postId} = req.params;     
     const { _id: userId} = req.user;
 
@@ -97,6 +100,7 @@ exports.deleteComment = async (req, res) => {
 }
 
 exports.patchComment = async (req, res) => {
+    
     const {id: commentId} = req.params;     
     const { _id: userId} = req.user; 
 

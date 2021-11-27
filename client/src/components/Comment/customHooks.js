@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { authAxios } from "../../shared/axiosConfig";
+import { authAxios, config } from "../../shared/axiosConfig";
+// import axios from 'axios';
 import { tryCatchHandlr, refPayloader } from "../../shared/helpers";
 
 export const useToggledEditComment = (ref, setComment) => {
@@ -10,10 +11,28 @@ export const useToggledEditComment = (ref, setComment) => {
             (async function(){
                 const {current: {id: commentId}} = ref;
            
+                // const request = axios
+                //     .patch(
+                //         `/comments/${commentId}`,
+                //         {...refPayloader(ref)},
+                //         {headers: {
+                //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+                //             "Content-Type": "application/json",
+                //         }},
+                //     );
+
+                const token = window.localStorage.getItem('token');
+
                 const request = authAxios
                     .patch(
                         `/comments/${commentId}`,
-                        refPayloader(ref)
+                        refPayloader(ref),
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                "Content-Type": "application/json",
+                            }
+                        }
                     );
                 
                 const [data, error] = await tryCatchHandlr(request);

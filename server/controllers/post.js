@@ -1,6 +1,7 @@
 const Post = require('../models/PostModel');
-
+const moment = require('moment');
 exports.createPost = async (req, res) => {      
+    
     if(!req.user){
         res.status(401).json({
             message: 'INVALID TOKEN SOMEHOW'
@@ -31,12 +32,16 @@ exports.createPost = async (req, res) => {
 }
 
 exports.getPosts = async (req, res) => {
+    
     try {
         //TODO Establish Pagination
         const posts = await Post.find({}).sort({'updatedAt': -1});
         res.status(201).json({
             status: 'success',
-            posts,
+            posts: [...posts].map(post => {
+                const {createdAt} =  post
+                return {...post._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')};
+            }),
             meta: {
                 "current_page": 'x',
                 "per_page": 'xx',
@@ -52,6 +57,7 @@ exports.getPosts = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
+    
     const {id: postId} = req.params;     
     const { _id: userId} = req.user;
 
@@ -73,6 +79,7 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.patchPost = async (req, res) => {
+    
     const {id: postId} = req.params;     
     const { _id: userId} = req.user; 
 
@@ -96,8 +103,8 @@ exports.patchPost = async (req, res) => {
     }
 }
 
-exports.checkPost = async (req, res, next) => {
-
+exports.checkPost = async (req, res, next) => { 
+    
     const {comment: {post_id}} = req.body;
 
     try{

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { authAxios } from "../../shared/axiosConfig";
+import { authAxios, config } from "../../shared/axiosConfig";
 import { tryCatchHandlr, refPayloader, getPosts } from "../../shared/helpers";
 
 export const useToggledEditPost = (ref, setPosts) => {
@@ -10,10 +10,18 @@ export const useToggledEditPost = (ref, setPosts) => {
             (async function(){
                 const {current: {id: postId}} = ref;
 
+                const token = window.localStorage.getItem('token');
+
                 const request = authAxios
                     .patch(
                         `/posts/${postId}`,
-                        refPayloader(ref)
+                        refPayloader(ref),
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                "Content-Type": "application/json",
+                            }
+                        }
                     );
                 
                 const [data, error] = await tryCatchHandlr(request);
