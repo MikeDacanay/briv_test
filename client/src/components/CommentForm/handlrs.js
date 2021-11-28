@@ -3,7 +3,7 @@ import { authAxios, config } from "../../shared/axiosConfig";
 import { payloader, tryCatchHandlr } from "../../shared/helpers";
 
 
-export const submitHandlr = async (e, post_id, isLoggedIn, setrequestComments) => {
+export const submitHandlr = async (e, post_id, isLoggedIn, setComments) => {
     e.preventDefault();
 
     const payload = {
@@ -30,7 +30,20 @@ export const submitHandlr = async (e, post_id, isLoggedIn, setrequestComments) =
 
     const [createCommentData, createCommentError] = await tryCatchHandlr(request);
     
-    setrequestComments(prev => !prev);
-    
-    return [createCommentData, createCommentError];
+    //TODO handle errors
+    if(createCommentError){
+        console.log(createCommentError);
+        return createCommentError;
+    }
+
+    const {data: {comment}} = createCommentData;
+
+    setComments(prev => {
+        const tempObj = {...prev};
+        const {post: {_id: postId}} = comment
+        tempObj[postId] ? tempObj[postId].unshift(comment) : tempObj[postId] = [comment];              
+        return tempObj;
+    });
+
+    return createCommentData;
 }

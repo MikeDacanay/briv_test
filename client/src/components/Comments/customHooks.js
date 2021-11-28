@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { reqAxios } from '../../shared/axiosConfig';
 import { tryCatchHandlr } from '../../shared/helpers';
 
-export const useCommentsOnInit = (post_id, requestComments) => {
+export const useCommentsOnInit = (post_id) => {
     const [comments, setcomments] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const useCommentsOnInit = (post_id, requestComments) => {
                 setcomments(comments);
             }
         })()
-    }, [post_id, requestComments])
+    }, [post_id])
 
-    return [comments];
+    return [comments, setcomments];
 }

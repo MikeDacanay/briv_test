@@ -7,12 +7,12 @@ import { CommentsContext } from "../../context/CommentsContext";
 import { UpdatableComment } from "./fractals";
 import { useToggledEditComment } from './customHooks';
 
-export const Comment = ({comment}) => {
+export const Comment = ({comment, post_id}) => {
     const {_id, contents, user:{display_name, _id: user_id}, createdAt} = comment;
     const { isLoggedIn } = useContext(AuthContext);
-    const { setrequestComments } = useContext(CommentsContext);
+    const { setComments } = useContext(CommentsContext);
     const containerRef = useRef(null);
-    const [editablecomment, seteditablecomment] = useToggledEditComment(containerRef);
+    const [editablecomment, seteditablecomment] = useToggledEditComment(containerRef, post_id, setComments);
 
     return (
         <div className="Comment__container" style={{
@@ -34,7 +34,7 @@ export const Comment = ({comment}) => {
             </form>
             {isLoggedIn === user_id && (
                 <Button
-                    clicked={() => deleteCommentHandlr(_id, setrequestComments)}>
+                    clicked={() => deleteCommentHandlr(post_id, _id, setComments)}>
                     Delete Comment
                 </Button>)
             }    

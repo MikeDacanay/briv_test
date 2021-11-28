@@ -1,6 +1,27 @@
 const Comment = require('../models/commentModel');
 const moment = require('moment');
 
+exports.getAllComments = async (req, res) => {
+    try{
+        //TODO aggregate this 
+        const comments = await Comment.find({}).sort({'createdAt': -1});
+
+        res.status(201).json({
+            status: 'success',
+            message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`, 
+            comments: [...comments].map(comment => {
+                const {createdAt} =  comment;
+                return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')}
+            }),
+        })
+    }catch (err) {
+        res.status(401).json({
+            status: 'failure',            
+            message: 'failed to retrieve comments',
+        })
+    }
+}
+
 exports.getComments = async (req, res) => {
     const {postId} = req.params;
     

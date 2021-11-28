@@ -6,9 +6,9 @@ import { CommentsContext } from "../../context/CommentsContext";
 
 export const CommentForm = ({post_id}) => {
     const { isLoggedIn } = useContext(AuthContext);
-    const { setrequestComments } = useContext(CommentsContext);
+    const { setComments } = useContext(CommentsContext);
     return (
-        <form action="" onSubmit={(e) => submitHandlr(e, post_id, isLoggedIn, setrequestComments)}>
+        <form action="" onSubmit={(e) => submitHandlr(e, post_id, isLoggedIn, setComments)}>
             <Input
                 name="contents"
                 label="Comment:"

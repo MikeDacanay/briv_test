@@ -2,19 +2,12 @@ import { authAxios, config } from "../../shared/axiosConfig";
 // import axios from "axios";
 import { tryCatchHandlr } from "../../shared/helpers";
 
-export const deleteCommentHandlr = async (post_id, setrequestComments) => {
-    // const request = axios.delete(
-    //         `/comments/${post_id}`,
-    //         {headers: {
-    //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-    //             "Content-Type": "application/json",
-    //         }},
-    //     );
+export const deleteCommentHandlr = async (post_id ,comment_id, setComments) => {
     const token = window.localStorage.getItem('token');
 
     const request = authAxios
         .delete(
-            `comments/${post_id}`,
+            `comments/${comment_id}`,
             config,
             {
                 headers: {
@@ -26,7 +19,21 @@ export const deleteCommentHandlr = async (post_id, setrequestComments) => {
 
     const [data, error] = await tryCatchHandlr(request);
  
-    setrequestComments(prev => !prev);
+    // TODO HANDLE ERROR WITH MESSAGE
+    if(error) { 
+        console.log(error);
+        return error;
+    }
 
-    return [data, error];
+    setComments(prev => {
+        const tempObj = {...prev};
+
+        const commentIdxToDelete = tempObj[post_id].findIndex(comment => comment._id === comment_id);
+
+        tempObj[post_id].splice(commentIdxToDelete, 1);
+
+        return tempObj;
+    });
+
+    return data;
 }

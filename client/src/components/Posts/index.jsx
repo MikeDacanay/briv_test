@@ -7,9 +7,6 @@ export const Posts = () => {
  
     const postsContxt = useContext(PostsContext);
 
-    console.log(postsContxt.posts);
-
-
     return (
         <div className="Posts">
 			{postsContxt.posts.length && postsContxt.posts.map(post => (<Post key={post._id} post={post}/>))}           

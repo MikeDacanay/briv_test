@@ -1,17 +1,15 @@
 import React, { useContext} from "react";
 import { Comment } from "../Comment";
-import { useCommentsOnInit } from "./customHooks";
 import { CommentsContext } from "../../context/CommentsContext";
 
 export const Comments = ({post_id}) => {
-    const {requestComments} = useContext(CommentsContext);
-
-    const [comments] = useCommentsOnInit(post_id, requestComments);
+    const {comments} = useContext(CommentsContext);
+    const commentsPerPost = comments[post_id] === undefined ? [] : [...comments[post_id]];
 
     return (
         <div className="Comments">
-            {comments.map(comment => (
-                <Comment key={comment._id} comment={comment}/>
+            {commentsPerPost.length && commentsPerPost.map(comment => (
+                <Comment key={comment._id} comment={comment} post_id={post_id}/>
             ))}
         </div>
     )
