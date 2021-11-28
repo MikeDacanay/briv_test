@@ -7,7 +7,7 @@ export const Comments = ({post_id}) => {
     const commentsPerPost = comments[post_id] === undefined ? [] : [...comments[post_id]];
 
     return (
-        <div className="Comments">
+        <div className="Comments" style={{'background': 'burlywood'}}>
             {!!commentsPerPost.length && commentsPerPost.map(comment => (
                 <Comment key={comment._id} comment={comment} post_id={post_id}/>
             ))}

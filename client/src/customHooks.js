@@ -9,7 +9,7 @@ export const useStartup = () => {
     useEffect(() => {
         if(!displayName || !userId || !token) {
             localStorage.clear();
-            history.replace('/');
+            history.replace('/welcome');
         }else {
             history.replace('/dashboard');
         }

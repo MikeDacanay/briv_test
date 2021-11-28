@@ -30,7 +30,9 @@ export const CommentsProvider =  ({children}) => {
                 }
                 for(const key in tempObj) {
                     querySorter(tempObj[key]);
-                    tempObj[key].length = 5;
+                    if(tempObj[key].length > 5){
+                        tempObj[key].length = 5;
+                    }
 
                     setCommentsPage(prev => {
                         const tempPrev = {...prev};                            
@@ -38,7 +40,6 @@ export const CommentsProvider =  ({children}) => {
                         return tempPrev;
                     });
                 }
-
                 return tempObj;
             });
 

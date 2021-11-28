@@ -16,7 +16,7 @@ export const Post = ({post}) => {
     const [editablepost, seteditablepost] = useToggledEditPost(containerRef, setPosts);
 
     return (
-        <div className="Post__container" style={{'border': '1px solid black'}}>
+        <div className="Post__container" style={{'border': '1px solid black', 'background': 'beige'}}>
             <form className="" ref={containerRef} id={_id} onSubmit={(e) => toggleEditHandlr(e, seteditablepost)}>
                 <UpdatablePost
                     title={title}
