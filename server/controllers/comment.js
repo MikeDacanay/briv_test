@@ -25,33 +25,33 @@ exports.getAllComments = async (req, res) => {
     }
 }
 
-// exports.getComments = async (req, res) => {
-//     const {postId} = req.params;
-    
+exports.getComments = async (req, res) => {
+    const {postId} = req.params;
+    const {commAmt} = req.query;
 
-//     try{
-//         const comments = await Comment.find({'post._id': postId}).sort({'updatedAt': -1});
-
-//         if(comments.length){
+    try{        
+        const comments = await Comment.find({'post._id': postId}).sort({'createdAt': -1}).skip(+commAmt).limit(5);
 
 
-//             res.status(201).json({
-//                 status: 'success', 
-//                 message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`,           
-//                 // comments: xxx,
-//                 comments: [...comments].map(comment => {
-//                     const {createdAt} =  comment
-//                     return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:MM')};
-//                 }),
-//             })
-//         }
-//     }catch (err){
-//         res.status(401).json({
-//             status: 'failure',            
-//             message: 'failed to retrieve comments',
-//         })
-//     }
-// };
+        res.status(201).json({
+            status: 'success',
+            message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`, 
+            comments: [...comments].map(comment => {
+                const {createdAt: newCreatedAt} = comment;
+                const createdAt = moment(newCreatedAt).format('MM-DD-YYYY HH:MM');
+                const dateToCompare = moment(newCreatedAt).valueOf();
+
+                return {...comment._doc, createdAt, dateToCompare}
+            }),
+        })
+    }catch (err) {
+        console.log(err.message);
+        res.status(401).json({
+            status: 'failure',            
+            message: err.message,
+        })
+    }
+}
 
 exports.createComment = async (req, res) => {      
     
