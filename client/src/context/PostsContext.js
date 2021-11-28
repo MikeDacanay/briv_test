@@ -11,11 +11,6 @@ export const PostsProvider = ({children}) => {
         setPosts
     }
 
-
-    useEffect(() => {
-        console.log(posts);
-    }, [posts])
-
     return (
         <PostsContext.Provider value={initialValues}>
             {children}

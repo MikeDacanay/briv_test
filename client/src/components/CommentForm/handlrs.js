@@ -28,16 +28,6 @@ export const submitHandlr = async (e, post_id, isLoggedIn, setrequestComments) =
             }
         );
 
-    // const request = axios
-    //     .post(
-    //         '/comments',
-    //         {...payload},
-    //         {headers: {
-    //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-    //             "Content-Type": "application/json",
-    //         }},
-    //     );
-
     const [createCommentData, createCommentError] = await tryCatchHandlr(request);
     
     setrequestComments(prev => !prev);

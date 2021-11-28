@@ -50,12 +50,8 @@ export const UpdatablePost = ({editablepost, title, body, display_name, createdA
                 variant='textarea-0'
                 required
                 placeholder='Enter Post Here'/>
-                
-            {/* <div className="" style={{'dislplay': 'flex'}}> */}
             <div className="">Created By: {display_name}</div>
             <div className="">Created On: {createdAt}</div>
-                {/* <div className="">{display_name}</div> */}
-            {/* </div> */}
         </>
     );
 }

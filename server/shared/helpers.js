@@ -3,8 +3,6 @@ const tryCatchHandlr = async(promise) => {
         const data = await promise;
         return [data, null]
     }catch(err){
-        console.log(err);
-
         return [null, err];
     }
 }

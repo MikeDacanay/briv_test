@@ -1,8 +1,5 @@
-import { authAxios, config } from "../../shared/axiosConfig";
-// import axios from 'axios';
+import { authAxios } from "../../shared/axiosConfig";
 import { tryCatchHandlr } from "../../shared/helpers";
-import { getPosts } from "../../shared/helpers";
-
 
 export const deletePostHandlr = async (id, setPosts) => {
     const token = window.localStorage.getItem('token');
@@ -28,9 +25,21 @@ export const deletePostHandlr = async (id, setPosts) => {
     //     );
 
     const [data, error] = await tryCatchHandlr(request);
-    console.log(data, error);
 
-    getPosts(setPosts);
+    if(data){
+        setPosts(prev => {
+            const tempPosts = [...prev];
+            const postIdxToDelete = tempPosts.findIndex(post => post._id === id);
+            tempPosts.splice(postIdxToDelete, 1);
+            return tempPosts;
+        });
+
+        return data;
+    }
+
+    //TODO HANDLE ERROR WITH MESSAGE
+    return error;
+    // getPosts(setPosts);
 }
 
 export const toggleEditHandlr = (e, seteditablepost) => {

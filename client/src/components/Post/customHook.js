@@ -25,9 +25,26 @@ export const useToggledEditPost = (ref, setPosts) => {
                     );
                 
                 const [data, error] = await tryCatchHandlr(request);
-                console.log(data, error);
+                
+                if(data){
 
-                getPosts(setPosts);
+                    const {data : { updatedAttrs : {postId, title, body}}} = data;
+
+                    setPosts(prev => {
+                        const tempArr = [...prev];
+
+                        const postIdxToChange = tempArr.findIndex(post => post._id === postId);
+                        tempArr[postIdxToChange].title = title;
+                        tempArr[postIdxToChange].body = body;
+
+                        return tempArr;
+                    });
+
+                    return data;
+                }
+
+                return error;
+                //TODO HANDLE ERROR HERE
             })()            
         }
     }, [editablepost, ref, setPosts])

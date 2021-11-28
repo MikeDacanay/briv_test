@@ -89,11 +89,14 @@ exports.patchPost = async (req, res) => {
             "user._id": userId,
         }, {...req.body});    
 
-
         res.status(200).json({
             status: 'success',
             message: `Updated post: ${postId}`,
-            updatedPost
+            updatedPost,
+            updatedAttrs: {
+                ...req.body,
+                postId
+            }
         });
     } catch(err){
         res.status(401).json({

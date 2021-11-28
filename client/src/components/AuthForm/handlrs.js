@@ -49,8 +49,7 @@ function authDataAndErrorHandlr(arr, history,  {loginHandlr, errLoginHandlr, dis
     }    
     
     // TODO create specific* login/registration error to show error message on welcome
-    console.log(error);
     history.replace('/');
     errLoginHandlr();
-    return;
+    return error;
 }
