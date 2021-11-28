@@ -1,7 +1,3 @@
-import { reqAxios } from "../../shared/axiosConfig";
-
-export const loadMorePostsHanldr = () => {
-    console.log('loadin');
-
-    // const request = reqAxios.get();
+export const loadMorePostsHanldr = (setPage) => {
+    setPage(prev => prev+1);
 }

@@ -24,6 +24,7 @@ export const submitHandlr = async(e, setPosts) => {
         const {data: {post}} = createPostData;
         setPosts(prev => {
             const tempPosts = [...prev];
+
             tempPosts.unshift(post);
             return tempPosts;
         });

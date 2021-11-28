@@ -56,16 +56,12 @@ export const getComments = async (setComments, post_id) => {
 }
 
 export const querySorter = (query) => {
-    query.sort((docA, docB) => {
-        docA.comparableDate = getMomentVal(docA);
-        docB.comparableDate = getMomentVal(docB);
-        return docB.comparableDate - docA.comparableDate;
-    });
+    query.sort((docA, docB) => docA.dateToCompare < docB.dateToCompare ? 1 : -1);
 }
 
-function getMomentVal(doc){
-    const {createdAt} = doc;
-    const [date, time] = createdAt.split(' ');
+// function getMomentVal(doc){
+//     const {createdAt} = doc;
+//     const [date, time] = createdAt.split(' ');
 
-    return (date.replace(/[^0-9]+/g, "")+time.replace(/[^0-9]+/g, ""))*1;
-}
+//     return (date.replace(/[^0-9]+/g, "")+time.replace(/[^0-9]+/g, ""));
+// }

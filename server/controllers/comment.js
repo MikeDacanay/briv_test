@@ -10,8 +10,11 @@ exports.getAllComments = async (req, res) => {
             status: 'success',
             message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`, 
             comments: [...comments].map(comment => {
-                const {createdAt} =  comment;
-                return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')}
+                const {createdAt: newCreatedAt} = comment;
+                const createdAt = moment(newCreatedAt).format('MM-DD-YYYY HH:MM');
+                const dateToCompare = moment(newCreatedAt).valueOf();
+
+                return {...comment._doc, createdAt, dateToCompare}
             }),
         })
     }catch (err) {
@@ -22,33 +25,33 @@ exports.getAllComments = async (req, res) => {
     }
 }
 
-exports.getComments = async (req, res) => {
-    const {postId} = req.params;
+// exports.getComments = async (req, res) => {
+//     const {postId} = req.params;
     
 
-    try{
-        const comments = await Comment.find({'post._id': postId}).sort({'updatedAt': -1});
+//     try{
+//         const comments = await Comment.find({'post._id': postId}).sort({'updatedAt': -1});
 
-        if(comments.length){
+//         if(comments.length){
 
 
-            res.status(201).json({
-                status: 'success', 
-                message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`,           
-                // comments: xxx,
-                comments: [...comments].map(comment => {
-                    const {createdAt} =  comment
-                    return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')};
-                }),
-            })
-        }
-    }catch (err){
-        res.status(401).json({
-            status: 'failure',            
-            message: 'failed to retrieve comments',
-        })
-    }
-};
+//             res.status(201).json({
+//                 status: 'success', 
+//                 message: `${comments.length ? `Retrieved ${comments.length} comments` : 'Sorry no comments retrieved'}`,           
+//                 // comments: xxx,
+//                 comments: [...comments].map(comment => {
+//                     const {createdAt} =  comment
+//                     return {...comment._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:MM')};
+//                 }),
+//             })
+//         }
+//     }catch (err){
+//         res.status(401).json({
+//             status: 'failure',            
+//             message: 'failed to retrieve comments',
+//         })
+//     }
+// };
 
 exports.createComment = async (req, res) => {      
     
@@ -85,9 +88,13 @@ exports.createComment = async (req, res) => {
             }
         });
 
+        const {createdAt: newCreatedAt} = comment;
+        const createdAt = moment(newCreatedAt).format('MM-DD-YYYY HH:MM');
+        const dateToCompare = moment(newCreatedAt).valueOf();
+
         res.status(201).json({
             status: 'success',
-            comment,
+            comment: {...comment._doc, createdAt, dateToCompare}
         });
     }catch(err){
         res.status(401).json({

@@ -1,5 +1,6 @@
 const Post = require('../models/PostModel');
 const moment = require('moment');
+require('mongodb-moment')(moment);
 exports.createPost = async (req, res) => {      
     
     if(!req.user){
@@ -18,10 +19,13 @@ exports.createPost = async (req, res) => {
                 display_name
             },
         });
+        const {createdAt: newCreatedAt} = post;
+        const createdAt = moment(newCreatedAt).format('MM-DD-YYYY HH:MM');
+        const dateToCompare = moment(newCreatedAt).valueOf();
 
         res.status(201).json({
             status: 'success',
-            post
+            post: {...post._doc, createdAt, dateToCompare},
         });
     }catch (err){
         res.status(401).json({
@@ -32,15 +36,20 @@ exports.createPost = async (req, res) => {
 }
 
 exports.getPosts = async (req, res) => {
-    
+    const {posts: postsTotal} = req.params; // 1
+    const skip = postsTotal;
+
     try {
         //TODO Establish Pagination
-        const posts = await Post.find({}).sort({'updatedAt': -1});
+        const posts = await Post.find({}).sort({'updatedAt': -1}).skip(skip).limit(5);
         res.status(201).json({
             status: 'success',
             posts: [...posts].map(post => {
-                const {createdAt} =  post
-                return {...post._doc, createdAt: moment(createdAt).format('MM-DD-YYYY HH:SS')};
+                const {createdAt: newCreatedAt} = post;
+                const createdAt = moment(newCreatedAt).format('MM-DD-YYYY HH:MM');
+                const dateToCompare = moment(newCreatedAt).valueOf();
+                    
+                return {...post._doc, createdAt, dateToCompare};
             }),
             meta: {
                 "current_page": 'x',
