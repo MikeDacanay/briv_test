@@ -22,8 +22,6 @@ if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
 }
 
-
-
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
