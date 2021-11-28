@@ -14,7 +14,7 @@ export const App = () => {
       <Switch>
         <Route path='/welcome' component={Welcome}/>
         <Route path='/dashboard' component={Dashboard}/>
-        <Redirect to='/welcome'/>
+        <Redirect from='*' to='/welcome'/>
       </Switch>
     </>
   )
