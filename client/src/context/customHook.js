@@ -8,30 +8,51 @@ export const useGetPosts = () => {
     const [page, setPage] = useState(1);
     const limit = 5;
 
-    useEffect(() => {
-        (async function () {
-            const request = reqAxios.get(`/posts?page=${page}`);
-            const [{data: {posts}}, error] = await tryCatchHandlr(request);
+    // useEffect(() => {
+    //     const postsLength = posts.length; 
 
-            //TODO Handle posts if there are zero posts
-            // console.log(posts);
-            if(posts){
-                querySorter(posts);
-                setPosts(posts);
-                return posts;
-            }
+    //     (async function () {
+    //         const request = reqAxios.get(`/posts?postsAmt=${postsLength}`);
+    //         const [{data: {posts}}, error] = await tryCatchHandlr(request);
 
-            //TODO Handle error by displaying html image
-            return error;
-        })()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    //         if(posts){
+    //             querySorter(posts);
+    //             setPosts(posts);
+    //             return posts;
+    //         }
+
+    //         //TODO Handle error by displaying html image
+    //         return error;
+    //     })()
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
     
     useEffect(() => {
-        if(page*limit < posts.length) {
-            const request = reqAxios.get(`/posts?posts=${posts.length}`);
-        }
+        const postsLength = posts.length;
+        
+        // console.log(page*limit, postsLength)
 
+        (async function(){
+            if(page*limit > postsLength) {
+                const request = reqAxios.get(`/posts?postsAmt=${postsLength}`);
+    
+                const [{data: {posts}}, error] = await tryCatchHandlr(request);
+
+                if(posts){
+                    querySorter(posts);
+
+                    if(postsLength) {
+                        setPosts(prev =>  prev.concat(posts));
+                        return;
+                    };
+                    setPosts(posts);
+                    return posts;
+                }
+    
+                //TODO Handle error by displaying html image
+                return error;
+            }
+        })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, setPosts])
 

@@ -36,12 +36,12 @@ exports.createPost = async (req, res) => {
 }
 
 exports.getPosts = async (req, res) => {
-    const {posts: postsTotal} = req.params; // 1
-    const skip = postsTotal;
+    const {postsAmt} = req.query; // 1
 
     try {
         //TODO Establish Pagination
-        const posts = await Post.find({}).sort({'updatedAt': -1}).skip(skip).limit(5);
+        const posts = await Post.find({}).sort({'updatedAt': -1}).skip(+postsAmt).limit(5);
+        // const posts = await Post.find({}).sort({'updatedAt': -1});
         res.status(201).json({
             status: 'success',
             posts: [...posts].map(post => {
