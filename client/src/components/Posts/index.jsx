@@ -5,11 +5,14 @@ import { PostsContext } from "../../context/PostsContext";
 
 export const Posts = () => {
  
-    const {posts} = useContext(PostsContext);
+    const postsContxt = useContext(PostsContext);
+
+    console.log(postsContxt.posts);
+
 
     return (
         <div className="Posts">
-			{posts.length && posts.map(post => (<Post key={post._id} post={post}/>))}           
+			{postsContxt.posts.length && postsContxt.posts.map(post => (<Post key={post._id} post={post}/>))}           
         </div>
     )
 }; 

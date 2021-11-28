@@ -20,7 +20,14 @@ export const submitHandlr = async(e, setPosts) => {
 
     const [createPostData, createPostError] = await tryCatchHandlr(request);
 
-    getPosts(setPosts);
+    if(createPostData){
+        const {data: {post}} = createPostData;
+        setPosts(prev => {
+            const tempPosts = [...prev];
+            tempPosts.unshift(post);
+            return tempPosts;
+        });
+    }
 
     return [createPostData, createPostError];
 };

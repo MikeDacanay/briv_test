@@ -38,8 +38,8 @@ export const Post = ({post}) => {
             }    
             <CommentForm
                 post_id={_id}/>
-            <Comments
-                post_id={_id}/>
+            {/* <Comments
+                post_id={_id}/> */}
         </div>
     )
 }
