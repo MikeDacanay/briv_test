@@ -15,15 +15,6 @@ export const deletePostHandlr = async (id, setPosts) => {
             }
         );
 
-    // const request = axios
-    //     .delete(
-    //         `/posts/${id}`,
-    //         {headers: {
-    //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-    //             "Content-Type": "application/json",
-    //         }},
-    //     );
-
     const [data, error] = await tryCatchHandlr(request);
 
     if(data){

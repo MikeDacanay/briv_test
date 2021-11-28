@@ -1,6 +1,6 @@
-import { authAxios, config } from "../../shared/axiosConfig";
+import { authAxios } from "../../shared/axiosConfig";
 // import axios from 'axios';
-import { tryCatchHandlr, payloader, getPosts } from "../../shared/helpers";
+import { tryCatchHandlr, payloader } from "../../shared/helpers";
 
 export const submitHandlr = async(e, setPosts) => {
     e.preventDefault();

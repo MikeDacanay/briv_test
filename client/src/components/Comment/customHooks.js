@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { authAxios, config } from "../../shared/axiosConfig";
+import { authAxios } from "../../shared/axiosConfig";
 // import axios from 'axios';
 import { tryCatchHandlr, refPayloader } from "../../shared/helpers";
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { authAxios, config } from "../../shared/axiosConfig";
-import { tryCatchHandlr, refPayloader, getPosts } from "../../shared/helpers";
+import { authAxios } from "../../shared/axiosConfig";
+import { tryCatchHandlr, refPayloader } from "../../shared/helpers";
 
 export const useToggledEditPost = (ref, setPosts) => {
     const [editablepost, seteditablepost] = useState('open');

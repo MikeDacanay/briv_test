@@ -54,3 +54,18 @@ export const getComments = async (setComments, post_id) => {
 
     return comments ? setComments(comments) : getCommentsError;
 }
+
+export const querySorter = (query) => {
+    query.sort((docA, docB) => {
+        docA.comparableDate = getMomentVal(docA);
+        docB.comparableDate = getMomentVal(docB);
+        return docB.comparableDate - docA.comparableDate;
+    });
+}
+
+function getMomentVal(doc){
+    const {createdAt} = doc;
+    const [date, time] = createdAt.split(' ');
+
+    return (date.replace(/[^0-9]+/g, "")+time.replace(/[^0-9]+/g, ""))*1;
+}

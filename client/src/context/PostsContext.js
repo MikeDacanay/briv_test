@@ -1,14 +1,16 @@
-import { createContext, useEffect} from 'react';
+import { createContext } from 'react';
 import { useGetPosts } from './customHook';
 
 export const PostsContext = createContext({});
 
 export const PostsProvider = ({children}) => {
-    const [posts, setPosts] = useGetPosts();  
+    const {posts, setPosts, page, setPage} = useGetPosts();  
 
     const initialValues = {
         posts, 
-        setPosts
+        setPosts,
+        page, 
+        setPage
     }
 
     return (
