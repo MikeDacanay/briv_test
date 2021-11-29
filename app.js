@@ -1,6 +1,5 @@
 const express = require('express');
 const logger = require('morgan');
-const path = require('path');
 const cors = require('cors');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
