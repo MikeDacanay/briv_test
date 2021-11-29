@@ -18,9 +18,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'));
-}
+// if(process.env.NODE_ENV === 'production'){
+//     app.use(express.static('client/build'));
+// }
 
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
