@@ -6,7 +6,7 @@ import { useStartup } from './customHooks';
 import { Title } from './components/Title';
 
 export const App = () => {
-  useStartup();
+  const {route} = useStartup();
 
   return (
     <>
@@ -14,7 +14,7 @@ export const App = () => {
       <Switch>
         <Route path='/welcome' component={Welcome}/>
         <Route path='/dashboard' component={Dashboard}/>
-        <Redirect from='*' to='/welcome'/>
+        <Redirect from='/' to={route}/>
       </Switch>
     </>
   )

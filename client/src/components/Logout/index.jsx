@@ -11,7 +11,7 @@ export const Logout = props => {
         window.localStorage.clear();
         displayNameHandlr(null);
         loginHandlr(null);
-        history.replace('/');
+        history.replace('/welcome');
     };
   
     return (
